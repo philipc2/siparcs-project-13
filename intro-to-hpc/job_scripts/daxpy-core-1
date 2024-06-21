@@ -1,0 +1,33 @@
+#!/bin/bash
+#PBS -N daxpy_job
+#PBS -A NVST0001
+#PBS -q main
+#PBS -l walltime=00:10:00
+#PBS -l select=1:ncpus=1
+#PBS -l job_priority=regular
+
+### Set temp to scratch
+export TMPDIR=${SCRATCH}/${USER}/temp && mkdir -p $TMPDIR
+
+### Specify desired module environment 
+module load conda 
+conda activate intro-to-hpc
+
+# List Comp
+echo "list_comp 100000000" >> timed_1core.txt
+python daxpy.py -n 100000000 -m list_comp >> timed_1core.txt
+
+# Numpy
+echo >> timed_1core.txt
+echo "numpy 100000000" >> timed_1core.txt
+python daxpy.py -n 100000000 -m numpy >> timed_1core.txt
+
+# Numba
+echo >> timed_1core.txt
+echo "numba 100000000" >> timed_1core.txt
+python daxpy.py -n 100000000 -m numba >> timed_1core.txt
+
+#Dask 
+echo >> timed_1core.txt
+echo "dask 100000000" >> timed_1core.txt
+python daxpy.py -n 100000000 -m dask >> timed_1core.txt
