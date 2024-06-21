@@ -82,6 +82,7 @@ def main():
 
     # print the execution time in seconds
     print(end - start)
+    return end-start
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,79 @@
+#!/bin/bash
+#PBS -N daxpy_job
+#PBS -A NVST0001
+#PBS -q main
+#PBS -l walltime=00:10:00
+#PBS -l select=1:ncpus=128
+#PBS -l job_priority=regular
+
+### Set temp to scratch
+export TMPDIR=${SCRATCH}/${USER}/temp && mkdir -p $TMPDIR
+
+### Specify desired module environment 
+module load conda 
+conda activate intro-to-hpc
+
+# Standard list 
+echo "list 10000" >> timed_output.txt
+python daxpy.py -n 10000 -m list >> timed_output.txt
+echo "list 100000" >> timed_output.txt
+python daxpy.py -n 100000 -m list >> timed_output.txt
+echo "list 1000000" >> timed_output.txt
+python daxpy.py -n 1000000 -m list >> timed_output.txt
+echo "list 10000000" >> timed_output.txt
+python daxpy.py -n 10000000 -m list >> timed_output.txt
+echo "list 100000000" >> timed_output.txt
+python daxpy.py -n 100000000 -m list >> timed_output.txt
+
+
+# List Comp
+echo >> timed_output.txt
+echo "list_comp 10000" >> timed_output.txt
+python daxpy.py -n 10000 -m list_comp >> timed_output.txt
+echo "list_comp 100000" >> timed_output.txt
+python daxpy.py -n 100000 -m list_comp >> timed_output.txt
+echo "list_comp 1000000" >> timed_output.txt
+python daxpy.py -n 1000000 -m list_comp >> timed_output.txt
+echo "list_comp 10000000" >> timed_output.txt
+python daxpy.py -n 10000000 -m list_comp >> timed_output.txt
+echo "list_comp 100000000" >> timed_output.txt
+python daxpy.py -n 100000000 -m list_comp >> timed_output.txt
+
+# Numpy
+echo >> timed_output.txt
+echo "numpy 10000" >> timed_output.txt
+python daxpy.py -n 10000 -m numpy >> timed_output.txt
+echo "numpy 100000" >> timed_output.txt
+python daxpy.py -n 100000 -m numpy >> timed_output.txt
+echo "numpy 1000000" >> timed_output.txt
+python daxpy.py -n 1000000 -m numpy >> timed_output.txt
+echo "numpy 10000000" >> timed_output.txt
+python daxpy.py -n 10000000 -m numpy >> timed_output.txt
+echo "numpy 100000000" >> timed_output.txt
+python daxpy.py -n 100000000 -m numpy >> timed_output.txt
+
+# Numba
+echo >> timed_output.txt
+echo "numba 10000" >> timed_output.txt
+python daxpy.py -n 10000 -m numba >> timed_output.txt
+echo "numba 100000" >> timed_output.txt
+python daxpy.py -n 100000 -m numba >> timed_output.txt
+echo "numba 1000000" >> timed_output.txt
+python daxpy.py -n 1000000 -m numba >> timed_output.txt
+echo "numba 10000000" >> timed_output.txt
+python daxpy.py -n 10000000 -m numba >> timed_output.txt
+echo "numba 100000000" >> timed_output.txt
+python daxpy.py -n 100000000 -m numba >> timed_output.txt
+
+#Dask 
+echo >> timed_output.txt
+echo "dask 10000" >> timed_output.txt
+python daxpy.py -n 10000 -m dask >> timed_output.txt
+echo "dask 100000" >> timed_output.txt
+python daxpy.py -n 100000 -m dask >> timed_output.txt
+echo "dask 1000000" >> timed_output.txt
+python daxpy.py -n 1000000 -m dask >> timed_output.txt
+echo "dask 10000000" >> timed_output.txt
+python daxpy.py -n 10000000 -m dask >> timed_output.txt
+echo "dask 100000000" >> timed_output.txt
+python daxpy.py -n 100000000 -m dask >> timed_output.txt
